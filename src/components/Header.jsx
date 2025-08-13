@@ -9,7 +9,9 @@ const Header = () => {
     >
       <div className="flex items-center justify-center space-x-3">
         <img src={logo} alt="Espresso Emporium Logo" className="w-10 h-10" />
-        <h1 className="text-3xl font-bold text-white">Espresso Emporium</h1>
+        <h1 className="text-3xl md:text-6xl font-bold md:font-normal text-white">
+          Espresso Emporium
+        </h1>
       </div>
     </header>
   );
