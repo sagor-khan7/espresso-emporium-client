@@ -1,7 +1,59 @@
 import { Link } from "react-router-dom";
 import bgImg from "../assets/more/11.png";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 const AddCoffee = () => {
+  const [formData, setFormDate] = useState({
+    name: "",
+    chef: "",
+    supplier: "",
+    taste: "",
+    price: "",
+    category: "",
+    details: "",
+    photo: "",
+  });
+
+  const handleChange = (e) => {
+    setFormDate({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetch("http://localhost:3000/coffees", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Coffee Added Successfully!",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1200,
+          });
+          // reset form
+          setFormDate({
+            name: "",
+            chef: "",
+            supplier: "",
+            taste: "",
+            price: "",
+            category: "",
+            details: "",
+            photo: "",
+          });
+        }
+      });
+  };
+
   return (
     <div
       className="bg-cover bg-center py-12"
@@ -29,13 +81,18 @@ const AddCoffee = () => {
         </p>
 
         {/* Form */}
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Name */}
             <div>
-              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">Name</label>
+              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">
+                Name
+              </label>
               <input
                 type="text"
+                name="name"
+                onChange={handleChange}
+                value={formData.name}
                 placeholder="Enter coffee name"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -43,9 +100,14 @@ const AddCoffee = () => {
 
             {/* Chef */}
             <div>
-              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">Chef</label>
+              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">
+                Chef
+              </label>
               <input
                 type="text"
+                name="chef"
+                onChange={handleChange}
+                value={formData.chef}
                 placeholder="Enter coffee chef"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -58,6 +120,9 @@ const AddCoffee = () => {
               </label>
               <input
                 type="text"
+                name="supplier"
+                onChange={handleChange}
+                value={formData.supplier}
                 placeholder="Enter coffee supplier"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -65,9 +130,14 @@ const AddCoffee = () => {
 
             {/* Taste */}
             <div>
-              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">Taste</label>
+              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">
+                Taste
+              </label>
               <input
                 type="text"
+                name="taste"
+                onChange={handleChange}
+                value={formData.taste}
                 placeholder="Enter coffee taste"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -80,6 +150,9 @@ const AddCoffee = () => {
               </label>
               <input
                 type="text"
+                name="category"
+                onChange={handleChange}
+                value={formData.category}
                 placeholder="Enter coffee category"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -87,9 +160,14 @@ const AddCoffee = () => {
 
             {/* Price */}
             <div>
-              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">Price</label>
+              <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">
+                Price
+              </label>
               <input
                 type="number"
+                name="price"
+                onChange={handleChange}
+                value={formData.price}
                 placeholder="Enter coffee price"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -102,6 +180,9 @@ const AddCoffee = () => {
               </label>
               <input
                 type="text"
+                name="details"
+                onChange={handleChange}
+                value={formData.details}
                 placeholder="Enter coffee details"
                 className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
               />
@@ -110,9 +191,14 @@ const AddCoffee = () => {
 
           {/* Photo */}
           <div className="mt-4">
-            <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">Photo</label>
+            <label className="block text-xl text-[#1B1A1ACC] font-semibold mb-4">
+              Photo
+            </label>
             <input
               type="text"
+              name="photo"
+              onChange={handleChange}
+              value={formData.photo}
               placeholder="Enter photo URL"
               className="w-full border rounded px-3 py-3 text-sm focus:outline-none focus:ring focus:ring-yellow-300"
             />
