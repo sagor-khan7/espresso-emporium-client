@@ -1,8 +1,8 @@
 import { FaEye, FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
-const Coffee = ({ coffee }) => {
-  const { photo, name, price, chef } = coffee;
+const Coffee = ({ coffee, onDelete }) => {
+  const { _id, photo, name, price, chef } = coffee;
   return (
     <div className="p-8 bg-[#F5F4F1] md:flex gap-3 justify-between rounded-md">
       <img className="md:max-w-48 md:max-h-60" src={photo} alt={name} />
@@ -19,9 +19,12 @@ const Coffee = ({ coffee }) => {
         </p>
       </div>
       <div className="text-4xl flex sm:flex-col space-y-4 text-white my-auto gap-3 sm:gap-0">
-        <FaEye className="bg-[#D2B48C] p-2 rounded-md" />
-        <FaPen className="bg-[#3C393B] p-2 rounded-md" />
-        <MdDelete className="bg-[#EA4744] p-2 rounded-md" />
+        <FaEye className="bg-[#D2B48C] p-2 rounded-md cursor-pointer" />
+        <FaPen className="bg-[#3C393B] p-2 rounded-md cursor-pointer" />
+        <MdDelete
+          onClick={() => onDelete(_id)}
+          className="bg-[#EA4744] p-2 rounded-md cursor-pointer"
+        />
       </div>
     </div>
   );
