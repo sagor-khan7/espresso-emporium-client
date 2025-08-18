@@ -4,9 +4,11 @@ import Gallery from "../components/Gallery";
 import Products from "../components/Products";
 import ShowCase from "../components/ShowCase";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const Home = () => {
   const loadedData = useLoaderData();
+  const [coffees, setCoffees] = useState(loadedData);
 
   function handleDelete(_id) {
     Swal.fire({
@@ -32,6 +34,8 @@ const Home = () => {
                 showConfirmButton: false,
                 timer: 1200,
               });
+              const remaining = coffees.filter((coffee) => coffee._id !== _id);
+              setCoffees(remaining);
             }
           });
       }
@@ -44,7 +48,7 @@ const Home = () => {
       <section className="bg-[#ECEAE3]">
         <ShowCase />
       </section>
-      <Products coffees={loadedData} onDelete={handleDelete} />
+      <Products coffees={coffees} onDelete={handleDelete} />
       <Gallery />
     </div>
   );
