@@ -30,7 +30,7 @@ const Products = ({ coffees, onDelete }) => {
         {/* products cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 mt-12 gap-6">
           {coffees.map((coffee) => (
-            <Coffee key={coffee._id} coffee={coffee} onDelete={onDelete}/>
+            <Coffee key={coffee._id} coffee={coffee} onDelete={onDelete} />
           ))}
         </div>
       </div>
