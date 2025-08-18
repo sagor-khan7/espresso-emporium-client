@@ -1,5 +1,6 @@
 import { FaEye, FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Coffee = ({ coffee, onDelete }) => {
   const { _id, photo, name, price, chef } = coffee;
@@ -20,7 +21,9 @@ const Coffee = ({ coffee, onDelete }) => {
       </div>
       <div className="text-4xl flex sm:flex-col space-y-4 text-white my-auto gap-3 sm:gap-0">
         <FaEye className="bg-[#D2B48C] p-2 rounded-md cursor-pointer" />
-        <FaPen className="bg-[#3C393B] p-2 rounded-md cursor-pointer" />
+        <Link to={`update-coffee/${_id}`}>
+          <FaPen className="bg-[#3C393B] p-2 rounded-md cursor-pointer" />
+        </Link>
         <MdDelete
           onClick={() => onDelete(_id)}
           className="bg-[#EA4744] p-2 rounded-md cursor-pointer"
