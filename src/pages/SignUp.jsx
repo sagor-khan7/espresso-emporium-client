@@ -1,20 +1,49 @@
 import { NavLink } from "react-router-dom";
 import bgImg from "../assets/more/11.png";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const SignUp = () => {
+  const { signUpUser, googleSignin } = useContext(AuthContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    signUpUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  const handleGoogleSignin = () => {
+    googleSignin()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div
       className="flex items-center justify-center bg-[#f8f6f3] px-4 bg-cover bg-center"
       style={{ backgroundImage: `url(${bgImg})` }}
     >
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 md:p-8 mt-10 md:mt-20">
+      <div className="w-full max-w-2xl bg-white rounded-md shadow-lg p-6 md:p-8 mt-10 md:mt-20">
         {/* Title */}
         <h2 className="text-3xl md:text-5xl font-bold text-center text-[#331A15] mb-6">
           Create an Account
         </h2>
 
         {/* Sign Up Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email Field */}
           <div>
             <label className="block text-xl font-medium text-[#5C5B5B] mb-1">
@@ -22,6 +51,7 @@ const SignUp = () => {
             </label>
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
               className="w-full border border-[#D2B48C] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#331A15]"
               required
@@ -35,6 +65,7 @@ const SignUp = () => {
             </label>
             <input
               type="password"
+              name="password"
               placeholder="Enter your password"
               className="w-full border border-[#D2B48C] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#331A15]"
               required
@@ -58,7 +89,10 @@ const SignUp = () => {
         </div>
 
         {/* Google Sign-In Button */}
-        <button className="w-full flex items-center justify-center gap-2 border border-[#D2B48C] py-2 rounded-lg hover:bg-[#D2B48C]/20 transition duration-200">
+        <button
+          onClick={handleGoogleSignin}
+          className="w-full flex items-center justify-center gap-2 border border-[#D2B48C] py-2 rounded-lg hover:bg-[#D2B48C]/20 transition duration-200"
+        >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google Logo"
