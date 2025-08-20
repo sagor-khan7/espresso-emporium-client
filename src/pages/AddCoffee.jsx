@@ -22,7 +22,7 @@ const AddCoffee = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/coffees", {
+    fetch("https://espresso-emporium-server-bice.vercel.app/coffees", {
       method: "POST",
       headers: {
         "content-type": "application/json",

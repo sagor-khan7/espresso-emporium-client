@@ -18,8 +18,7 @@ const SignUp = () => {
       .then((result) => {
         const createdAt = result?.user?.metadata?.createdAt;
         const newUser = { name, email, photo, createdAt };
-        console.log(result.user);
-        fetch("http://localhost:3000/users", {
+        fetch("https://espresso-emporium-server-bice.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -27,21 +26,13 @@ const SignUp = () => {
           body: JSON.stringify(newUser),
         })
           .then((res) => res.json())
-          .then((data) => console.log(data));
+          .then();
       })
-      .catch((error) => {
-        console.log(error.message);
-      });
+      .catch();
   };
 
   const handleGoogleSignin = () => {
-    googleSignin()
-      .then((result) => {
-        console.log(result.user);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    googleSignin().then().catch();
   };
 
   return (

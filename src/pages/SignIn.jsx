@@ -14,12 +14,11 @@ const SignIn = () => {
 
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
         // update last login time
         const lastSigninAt = result?.user?.metadata?.lastLoginAt;
         const loginInfo = { email, lastSigninAt };
 
-        fetch(`http://localhost:3000/users`, {
+        fetch(`https://espresso-emporium-server-bice.vercel.app/users`, {
           method: "PATCH",
           headers: {
             "content-type": "application/json",
@@ -27,21 +26,13 @@ const SignIn = () => {
           body: JSON.stringify(loginInfo),
         })
           .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          });
+          .then();
       })
-      .catch((error) => console.log(error.message));
+      .catch();
   };
 
   const handleGoogleSignin = () => {
-    googleSignin()
-      .then((result) => {
-        console.log(result.user);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    googleSignin().then().catch();
   };
 
   return (

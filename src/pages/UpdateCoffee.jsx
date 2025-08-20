@@ -27,7 +27,7 @@ const UpdateCoffee = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`http://localhost:3000/coffee/${_id}`, {
+    fetch(`https://espresso-emporium-server-bice.vercel.app/coffee/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
