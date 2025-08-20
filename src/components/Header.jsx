@@ -34,6 +34,17 @@ const Header = () => {
           </NavLink>
 
           <NavLink
+            to="/users"
+            className={({ isActive }) =>
+              `text-lg font-rancho transition ${
+                isActive ? "text-yellow-300" : "text-white hover:text-gray-200"
+              }`
+            }
+          >
+            Users
+          </NavLink>
+
+          <NavLink
             to="/add-coffee"
             className={({ isActive }) =>
               `text-lg font-rancho transition ${

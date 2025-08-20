@@ -9,12 +9,25 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
+    const name = form.name.value;
     const email = form.email.value;
+    const photo = form.photo.value;
     const password = form.password.value;
 
     signUpUser(email, password)
       .then((result) => {
+        const createdAt = result?.user?.metadata?.createdAt;
+        const newUser = { name, email, photo, createdAt };
         console.log(result.user);
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
       })
       .catch((error) => {
         console.log(error.message);
@@ -44,6 +57,20 @@ const SignUp = () => {
 
         {/* Sign Up Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name Field */}
+          <div>
+            <label className="block text-xl font-medium text-[#5C5B5B] mb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              className="w-full border border-[#D2B48C] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#331A15]"
+              required
+            />
+          </div>
+
           {/* Email Field */}
           <div>
             <label className="block text-xl font-medium text-[#5C5B5B] mb-1">
@@ -53,6 +80,20 @@ const SignUp = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
+              className="w-full border border-[#D2B48C] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#331A15]"
+              required
+            />
+          </div>
+
+          {/* PhotoURL Field */}
+          <div>
+            <label className="block text-xl font-medium text-[#5C5B5B] mb-1">
+              PhotoURL
+            </label>
+            <input
+              type="text"
+              name="photo"
+              placeholder="Enter your photoURL"
               className="w-full border border-[#D2B48C] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#331A15]"
               required
             />
