@@ -1,10 +1,43 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const loadedData = useLoaderData();
   const [users, setUsers] = useState(loadedData);
+
+  function handleDelete(_id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/users/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your coffee has been deleted.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1200,
+              });
+              const remaining = users.filter((coffee) => coffee._id !== _id);
+              setUsers(remaining);
+            }
+          });
+      }
+    });
+  }
 
   return (
     <div className="max-w-10/12 md:max-w-9/12 mx-auto px-4 py-8">
@@ -71,7 +104,10 @@ const Users = () => {
                   <button className="flex items-center gap-1 px-3 py-1 rounded-md bg-[#D2B48C] text-[#331A15] hover:bg-[#331A15] hover:text-white transition">
                     <FaEdit />
                   </button>
-                  <button className="flex items-center gap-1 px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition">
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className="flex items-center gap-1 px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition"
+                  >
                     <FaTrash />
                   </button>
                 </td>
